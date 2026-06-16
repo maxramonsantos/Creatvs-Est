@@ -4,3 +4,7 @@ supabase
 python-dotenv
 python-dotenv
 supabase
+flask-sqlalchemy
+psycopg2-binary
+sqlalchemy
+pg8000

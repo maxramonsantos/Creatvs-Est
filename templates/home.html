@@ -19,6 +19,9 @@
           Ferramentas digitais, catálogo comercial e conteúdo educacional.<br>
           Compartilhamos conhecimentos e crescemos juntos!
         </p>
+        {% for categoria in categorias %}
+            <h3>{{ categoria.nome }}</h3>
+        {% endfor %}
       </div>
     </section>
 
