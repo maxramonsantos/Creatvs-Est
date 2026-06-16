@@ -40,7 +40,7 @@ def lista_catalogo():
 @app.route("/teste")
 def teste():
     try:
-        response = supabase.table("categorias").select("*").execute()
+        response = supabase.table("Categoria").select("*").execute()
         return jsonify(response.data)
     except Exception as e:
         return jsonify({"erro": str(e)}), 500
