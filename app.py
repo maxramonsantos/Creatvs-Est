@@ -1,4 +1,6 @@
+import os
 from flask import Flask, render_template, jsonify
+from database import supabase
 
 app = Flask(__name__)
 
@@ -35,5 +37,14 @@ def lista_catalogo():
     return jsonify(CATEGORIAS)
 
 
+@app.route("/teste")
+def teste():
+    try:
+        response = supabase.table("categorias").select("*").execute()
+        return jsonify(response.data)
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
