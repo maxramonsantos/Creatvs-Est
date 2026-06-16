@@ -1,0 +1,166 @@
+Executar:
+
+pip install flask
+pip install flask-sqlalchemy
+pip install psycopg2-binary
+
+Ou adicionar ao requirements.txt:
+
+Flask
+Flask-SQLAlchemy
+psycopg2-binary
+
+Depois executar:
+
+pip list
+
+Verificar se aparecem:
+
+Flask
+Flask-SQLAlchemy
+psycopg2-binary
+SQLAlchemy
+
+Etapa 4 — Testar Leitura da Variável de Ambiente
+
+Adicionar temporariamente:
+
+import os
+
+print(os.getenv("DATABASE_URL"))
+
+Executar a aplicação.
+
+Resultado esperado:
+
+A URL do Neon deve aparecer no console.
+
+Se aparecer:
+
+None
+
+o Secret não está configurado corretamente.
+
+Etapa 5 — Configurar SQLAlchemy
+
+Verificar:
+
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+db = SQLAlchemy(app)
+
+Resultado esperado:
+
+A aplicação inicia sem erros.
+
+Etapa 6 — Criar Modelo de Teste
+
+Criar:
+
+class Categoria(db.Model):
+tablename = "categorias"
+
+id = db.Column(db.Integer, primary_key=True)
+nome = db.Column(db.String(100))
+Etapa 7 — Criar Tabelas
+
+Executar:
+
+with app.app_context():
+db.create_all()
+
+Resultado esperado:
+
+A tabela categorias deve aparecer no Neon.
+
+Etapa 8 — Verificar Tabelas no Neon
+
+No SQL Editor do Neon executar:
+
+SELECT * FROM categorias;
+
+Resultado esperado:
+
+A consulta executa sem erros.
+
+Etapa 9 — Testar Conexão Direta
+
+Criar rota:
+
+from sqlalchemy import text
+
+@app.route("/db-test")
+def db_test():
+db.session.execute(text("SELECT 1"))
+return "Conectado"
+
+Abrir:
+
+/db-test
+
+Resultado esperado:
+
+Conectado
+
+Etapa 10 — Inserir Dados de Teste
+
+Executar:
+
+categoria = Categoria(nome="Mercados")
+
+db.session.add(categoria)
+db.session.commit()
+
+Resultado esperado:
+
+Registro salvo.
+
+Etapa 11 — Consultar Dados
+
+Criar:
+
+@app.route("/teste")
+def teste():
+categorias = Categoria.query.all()
+
+return [
+    {
+        "id": c.id,
+        "nome": c.nome
+    }
+    for c in categorias
+]
+
+Resultado esperado:
+
+JSON retornando os registros.
+
+Etapa 12 — Diagnóstico Final
+
+Se ocorrer erro de driver:
+
+ModuleNotFoundError: psycopg2._psycopg
+
+Executar:
+
+pip uninstall psycopg2 -y
+pip install --upgrade psycopg2-binary
+
+Se necessário:
+
+rm -rf .pythonlibs
+pip install flask flask-sqlalchemy psycopg2-binary
+
+Critério de Sucesso
+
+A integração estará concluída quando:
+
+✓ DATABASE_URL estiver carregando corretamente.
+✓ Flask iniciar sem erros.
+✓ db.create_all() executar.
+✓ Tabelas aparecerem no Neon.
+✓ SELECT 1 funcionar.
+✓ Inserções funcionarem.
+✓ Consultas funcionarem.
+✓ Rota /teste retornar dados do banco.

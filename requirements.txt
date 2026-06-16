@@ -2,8 +2,6 @@ Flask
 gunicorn
 supabase
 python-dotenv
-python-dotenv
-supabase
 flask-sqlalchemy
 psycopg2-binary
 sqlalchemy
