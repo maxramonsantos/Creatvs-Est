@@ -26,9 +26,7 @@ _ssl_ctx = ssl.create_default_context()
 
 app.config["SQLALCHEMY_DATABASE_URI"] = _db_url
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
-    "connect_args": {"ssl_context": _ssl_ctx}
-}
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"connect_args": {"ssl_context": _ssl_ctx}}
 
 db = SQLAlchemy(app)
 
@@ -110,21 +108,19 @@ def lista_catalogo():
     return jsonify([categoria.to_dict() for categoria in categorias])
 
 
-@app.route("/teste")
-def teste():
-    categorias = Categoria.query.all()
-
-    return jsonify([categoria.to_dict() for categoria in categorias])
+@app.route("/ferramentas")
+def ferramentas():
+    return render_template("includes/page-ferramentas.html")
 
 
-@app.route("/db-test")
-def db_test():
-    try:
-        db.session.execute(text("SELECT 1"))
-        return {"status": "success", "message": "Conectado ao Neon PostgreSQL!"}
+@app.route("/creatvs-joga")
+def creatvs_joga():
+    return render_template("includes/page-creatvs-joga.html")
 
-    except Exception as e:
-        return {"status": "error", "message": str(e)}, 500
+
+@app.route("/aprenda")
+def apenda():
+    return render_template("includes/page-aprenda.html")
 
 
 # ==========================

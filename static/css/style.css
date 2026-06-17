@@ -31,3 +31,28 @@
   background-repeat: no-repeat;
   min-height: 400px;
 }
+.fundo-hero-catalogo {
+  background-image: url('../img/lagoa.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 400px;
+}
+
+.btn-filtro {
+  background-color: transparent;
+  color: #ff0000; /* Cor do texto (Vermelho igual ao seu original) */
+  border: 2px solid #ff0000; /* Borda grossa personalizada */
+  border-radius: 30px; /* Bordas bem arredondadas (estilo pílula) */
+  padding: 8px 20px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+/* Efeito ao passar o mouse nos botões */
+.btn-filtro:hover {
+  background-color: #ff0000;
+  color: #ffffff;
+  border-color: #d10000;
+  transform: translateY(-2px); /* Leve efeito de flutuar */
+  box-shadow: 0 4px 8px rgba(255, 0, 0, 0.2);
